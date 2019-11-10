@@ -127,16 +127,7 @@ public class InternetConnectivity{
         final long[] fileSize = new long[1];
         OkHttpClient client = new OkHttpClient();
         final boolean[] isFastNetwork = {false};
-
-        /*
-        Bandwidth in Kbps
-        POOR -      Bandwidth under 150 Kbps.
-        MODERATE    Bandwidth between 150 and 550 Kbps.
-        GOOD        Bandwidth over 2000 Kbps.
-        EXCELLENT   Bandwidth over 2000 Kbps.
-        UNKNOWN     Connection quality cannot be found.
-        */
-        int POOR_BANDWIDTH = 100;
+        
 
         // Create and build request
         Request request = new Request.Builder()
@@ -197,11 +188,16 @@ public class InternetConnectivity{
                 double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
                 double timeTakenSecs = timeTakenMills / 1000;  // divide by 1000 to get time in seconds
                 final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);
+                
+                //Bandwidth in Kbps
+                //POOR -      Bandwidth under 100 Kbps.
+                //MODERATE    Bandwidth between 150 and 550 Kbps.
+                //GOOD        Bandwidth over 2000 Kbps.
+                //EXCELLENT   Bandwidth over 2000 Kbps.
+                //UNKNOWN     Connection quality cannot be found.
+                if (kilobytesPerSec > 100){
 
-
-                // Update connection states
-                if (kilobytesPerSec > POOR_BANDWIDTH){
-
+                    // Update connection state
                     isFastNetwork[0] = true;
                 }
 
