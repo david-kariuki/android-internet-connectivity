@@ -3,22 +3,23 @@ This class checks for internet connection and speed on your android phone.
 It checks for both mobile and wifi connections.
 
 For mobile network speeds, the network subtypes below are checked
-	NETWORK_TYPE_1xRTT:
-	NETWORK_TYPE_EDGE:    return false;   // ~ 50-100     -Kbps   
-	NETWORK_TYPE_CDMA:    return false;   // ~ 14-64      -Kbps   
-	NETWORK_TYPE_EVDO_0:  return true;    // ~ 400-1000   -Kbps
-	NETWORK_TYPE_EVDO_A:  return true;    // ~ 600-1400   -Kbps
-	NETWORK_TYPE_GPRS:    return false;   // ~ 100        -Kbps   
-	NETWORK_TYPE_HSDPA:   return true;    // ~ 2000-1400  -Kbps
-	NETWORK_TYPE_HSPA:    return true;    // ~ 700-1700   -Kbps
-	NETWORK_TYPE_HSUPA:   return true;    // ~ 1000-2300  -Kbps
-	NETWORK_TYPE_UMTS:    return true;    // ~ 400-7000   -Kbps
-	NETWORK_TYPE_EHRPD:   return true;    // ~ 1000-2000  -Kbps   // API level 11
-	NETWORK_TYPE_EVDO_B:  return true;    // ~ 5000       -Kbps   // API level 9
-	NETWORK_TYPE_HSPAP:   return true;    // ~ 10000-20000-Kbps   // API level 13
-	NETWORK_TYPE_IDEN:    return false;   // ~ 25         -Kbps   // API level 8
-	NETWORK_TYPE_LTE:     return true;    // ~ 10000+     -Kbps   // API level 11
-	NETWORK_TYPE_UNKNOWN:                 // ~ Unknown
+
+	1.  NETWORK_TYPE_1xRTT:
+	2.  NETWORK_TYPE_EDGE:    return false;   // ~ 50-100     -Kbps   
+	3.  NETWORK_TYPE_CDMA:    return false;   // ~ 14-64      -Kbps   
+	4.  NETWORK_TYPE_EVDO_0:  return true;    // ~ 400-1000   -Kbps
+	5.  NETWORK_TYPE_EVDO_A:  return true;    // ~ 600-1400   -Kbps
+	6.  NETWORK_TYPE_GPRS:    return false;   // ~ 100        -Kbps   
+	7.  NETWORK_TYPE_HSDPA:   return true;    // ~ 2000-1400  -Kbps
+	8.  NETWORK_TYPE_HSPA:    return true;    // ~ 700-1700   -Kbps
+	9.  NETWORK_TYPE_HSUPA:   return true;    // ~ 1000-2300  -Kbps
+	10. NETWORK_TYPE_UMTS:    return true;    // ~ 400-7000   -Kbps
+	11. NETWORK_TYPE_EHRPD:   return true;    // ~ 1000-2000  -Kbps   // API level 11
+	12. NETWORK_TYPE_EVDO_B:  return true;    // ~ 5000       -Kbps   // API level 9
+	13. NETWORK_TYPE_HSPAP:   return true;    // ~ 10000-20000-Kbps   // API level 13
+	14. NETWORK_TYPE_IDEN:    return false;   // ~ 25         -Kbps   // API level 8
+	15. NETWORK_TYPE_LTE:     return true;    // ~ 10000+     -Kbps   // API level 11
+	16. NETWORK_TYPE_UNKNOWN:                 // ~ Unknown
 
 For wifi speed calculation:
 
