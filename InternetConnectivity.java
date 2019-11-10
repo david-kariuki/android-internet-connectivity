@@ -24,7 +24,7 @@ import java.util.Objects;
 public class InternetConnectivity{
 
     @SuppressWarnings("unused")
-    private static final String TAG = "networkTest";
+    private static final String TAG = InternetConnectivity.class.getSimpleName();
 
     /**
      * Check if there is any internet connection
