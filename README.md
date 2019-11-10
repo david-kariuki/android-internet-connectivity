@@ -26,8 +26,9 @@ For wifi speed calculation:
     1. A file is downloaded from the internet.
     2. Get download start time
     3. Calculate download time by subtracting download endTime from download startTime
-			double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
+		double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
           	double timeTakenSecs = timeTakenMills / 1000;  // divide by 1000 to get time in seconds
-          	final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);  	
+          	final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);  
+		
     4. Get the download speed by dividing the file size by time taken to download
           double speed = fileSize[0] / timeTakenMills;
