@@ -132,7 +132,7 @@ public class InternetConnectivity{
         // Create and build request
         Request request = new Request.Builder()
                 // Url of image to be downloaded
-                .url(NetworkUtils.NetworkUrls.backendAndroidFolder + "testImage.JPG")
+                .url("your-url-to-image-or-other-file)
                 .build();
 
         // Get start time
