@@ -21,7 +21,7 @@ For mobile network speeds, the network subtypes below are checked
 	15. NETWORK_TYPE_LTE:     return true;    // ~ 10000+     -Kbps   // API level 11
 	16. NETWORK_TYPE_UNKNOWN:                 // ~ Unknown
 
-For wifi speed calculation:
+<br/>For wifi speed calculation:
 
     1. A file is downloaded from the internet.
     2. Get download start time.
@@ -32,3 +32,9 @@ For wifi speed calculation:
 		
     4. Get the download speed by dividing the file size by time taken to download
           double speed = fileSize[0] / timeTakenMills;
+
+
+<br/>The following permissions will be required. Add them to your `AndroidManifest.xml` file.
+
+	1. <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	2. <uses-permission android:name="android.permission.INTERNET" />
