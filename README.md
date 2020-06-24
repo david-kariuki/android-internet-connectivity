@@ -1,4 +1,4 @@
-# Android-Internet-connection-class-java
+# JAVA Android-Internet-Connection-Class
 This class checks for internet connection and speed on your android phone.
 It checks for both mobile and wifi connections.
 
@@ -34,7 +34,16 @@ For mobile network speeds, the network subtypes below are checked
           double speed = fileSize[0] / timeTakenMills;
 
 
+<br/>**Manifest**
 <br/>The following permissions will be required. Add them to your `AndroidManifest.xml` file.
+```
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
 
-	1. <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	2. <uses-permission android:name="android.permission.INTERNET" />
+<br/>**build.gradle**
+<br/>Add `okhttp` library to your `dependencies` in your `build.gradle` file.
+```
+dependencies {
+    implementation 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+}
