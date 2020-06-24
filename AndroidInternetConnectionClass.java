@@ -1,4 +1,4 @@
-package com.artpellets.custom_adapters.network;
+package your.package.name;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * This class checks for device's network connectivity and network speed
  * Wifi network speed is calculated by downloading a file and calculating network speed
- * 
+ *
  */
 public class InternetConnectivity{
 
@@ -127,13 +127,13 @@ public class InternetConnectivity{
         final long[] fileSize = new long[1];
         OkHttpClient client = new OkHttpClient();
         final boolean[] isFastNetwork = {false};
-        
+
 
         // Create and build request
         Request request = new Request.Builder()
                 // Url of image to be downloaded
-                .url("your-url-to-image-or-other-file)
-                .build();
+                .url("your-url-to-image-or-other-file")
+                        .build();
 
         // Get start time
         startTime = System.currentTimeMillis();
@@ -188,7 +188,7 @@ public class InternetConnectivity{
                 double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
                 double timeTakenSecs = timeTakenMills / 1000;  // divide by 1000 to get time in seconds
                 final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);
-                
+
                 //Bandwidth in Kbps
                 //POOR -      Bandwidth under 100 Kbps.
                 //MODERATE    Bandwidth between 150 and 550 Kbps.
