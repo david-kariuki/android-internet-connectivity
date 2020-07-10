@@ -99,6 +99,7 @@ Check for connection speed with type and subtype
 ```
 if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
     // Throw UNKNOWN NETWORK exception
+    doSomething();
 }
 ```
 
@@ -162,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
 	// Check for connection speed with type and subtype
 	if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
 	    // Throw UNKNOWN NETWORK exception
+	    doSomething();
 	}
     }
 
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
      * Function to perform some task
      */
     private void doSomething(){
-        // Background request code here
+        // Background request or some other code here
     }
 }
 ```
