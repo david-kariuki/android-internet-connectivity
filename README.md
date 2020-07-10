@@ -47,3 +47,83 @@ For mobile network speeds, the network subtypes below are checked
 dependencies {
     implementation 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
 }
+```
+
+<br/>
+
+# Examples in code:
+
+```
+package dk.internetconnectivity;
+
+import android.content.Context;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        Context mContext = this; // Get activity context
+
+        // Check for connection to either WiFi or mobile connection
+        if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
+            // Run process requiring WiFi or mobile connection
+            doSomething();
+
+            // Check if connection is fast
+            if (InternetConnectivity.isConnectionFast(mContext)){
+                // Run heavy request requiring strong network connection
+                doSomething();
+            }
+        }
+
+        // Check for connection to either mobile connection
+        if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
+            // Run process on mobile network
+            doSomething();
+
+            // Check if connection is fast
+            if (InternetConnectivity.isConnectionFast(mContext)){
+                // Run heavy request requiring strong network connection
+                doSomething();
+            }
+        }
+
+        // Check for connection to either WiFi connection
+        if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
+            // Run process on WiFi connection - e.g. Heavy downloads, updates etc
+            doSomething();
+
+            // Check if connection is fast
+            if (InternetConnectivity.isConnectionFast(mContext)){
+                // Run heavy request requiring strong network connection
+                doSomething();
+            }
+        }
+    }
+
+    /**
+     * Function to perform some task
+     */
+    private void doSomething(){
+        // Background request code here
+    }
+}
+```
+
+
+<br/>**Android Application Example**
+
+An android application with code examples named `InternetConnectivity.zip` has been included in this repository.
+It contains: 
+1. `InternetConnectivity.class`
+2. `Example code implementations`
+3. A basic `network_security_config.xml` file - could be used to configure network traffic like disabling cleartexttraffic to domains and subdomains.
