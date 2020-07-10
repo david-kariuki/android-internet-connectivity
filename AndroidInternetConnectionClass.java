@@ -1,4 +1,4 @@
-package your.package.name;
+package dk.internetconnectivity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -18,8 +18,7 @@ import java.util.Objects;
 
 /**
  * This class checks for device's network connectivity and network speed
- * Wifi network speed is calculated by downloading a file and calculating network speed
- *
+ * WiFi network speed is calculated by downloading a file and calculating network speed
  */
 public class InternetConnectivity{
 
@@ -37,7 +36,7 @@ public class InternetConnectivity{
     }
 
     /**
-     * Check for Wifi network connection
+     * Check for WiFi network connection
      * @param context - For getting network info
      * @return return
      */
@@ -47,7 +46,7 @@ public class InternetConnectivity{
     }
 
     /**
-     * Check for mobile network connection
+     * Check for Mobile network connection
      * @param context - For getting network info
      * @return boolean
      */
@@ -75,29 +74,28 @@ public class InternetConnectivity{
     public static boolean isConnectionFast(int type, int subType){
         if (type==ConnectivityManager.TYPE_WIFI){
 
-            // Calculate Wifi network speed - (Wifi is not always fast)
+            // Calculate WiFi network speed - (WiFi is not always fast)
             return calculateNetworkSpeedByDownloadingFile();
-
         } else if(type==ConnectivityManager.TYPE_MOBILE){
 
             switch(subType){
 
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
-                case TelephonyManager.NETWORK_TYPE_EDGE:    return false;   // ~ 50-100     -Kbps   slow-----
-                case TelephonyManager.NETWORK_TYPE_CDMA:    return false;   // ~ 14-64      -Kbps   slow-----
-                case TelephonyManager.NETWORK_TYPE_EVDO_0:  return true;    // ~ 400-1000   -Kbps
-                case TelephonyManager.NETWORK_TYPE_EVDO_A:  return true;    // ~ 600-1400   -Kbps
-                case TelephonyManager.NETWORK_TYPE_GPRS:    return false;   // ~ 100        -Kbps   slow-----
-                case TelephonyManager.NETWORK_TYPE_HSDPA:   return true;    // ~ 2000-1400  -Kbps
-                case TelephonyManager.NETWORK_TYPE_HSPA:    return true;    // ~ 700-1700   -Kbps
-                case TelephonyManager.NETWORK_TYPE_HSUPA:   return true;    // ~ 1000-2300  -Kbps
-                case TelephonyManager.NETWORK_TYPE_UMTS:    return true;    // ~ 400-7000   -Kbps
-                case TelephonyManager.NETWORK_TYPE_EHRPD:   return true;    // ~ 1000-2000  -Kbps   // API level 11
-                case TelephonyManager.NETWORK_TYPE_EVDO_B:  return true;    // ~ 5000       -Kbps   // API level 9
-                case TelephonyManager.NETWORK_TYPE_HSPAP:   return true;    // ~ 10000-20000-Kbps   // API level 13
-                case TelephonyManager.NETWORK_TYPE_IDEN:    return false;   // ~ 25         -Kbps   // API level 8
-                case TelephonyManager.NETWORK_TYPE_LTE:     return true;    // ~ 10000+     -Kbps   // API level 11
-                case TelephonyManager.NETWORK_TYPE_UNKNOWN:                 // ~ Unknown
+                case TelephonyManager.NETWORK_TYPE_EDGE:    return false; // ~ 50-100     -Kbps - slow.
+                case TelephonyManager.NETWORK_TYPE_CDMA:    return false; // ~ 14-64      -Kbps - slow.
+                case TelephonyManager.NETWORK_TYPE_EVDO_0:  return true;  // ~ 400-1000   -Kbps
+                case TelephonyManager.NETWORK_TYPE_EVDO_A:  return true;  // ~ 600-1400   -Kbps
+                case TelephonyManager.NETWORK_TYPE_GPRS:    return false; // ~ 100        -Kbps - slow.
+                case TelephonyManager.NETWORK_TYPE_HSDPA:   return true;  // ~ 2000-1400  -Kbps
+                case TelephonyManager.NETWORK_TYPE_HSPA:    return true;  // ~ 700-1700   -Kbps
+                case TelephonyManager.NETWORK_TYPE_HSUPA:   return true;  // ~ 1000-2300  -Kbps
+                case TelephonyManager.NETWORK_TYPE_UMTS:    return true;  // ~ 400-7000   -Kbps
+                case TelephonyManager.NETWORK_TYPE_EHRPD:   return true;  // ~ 1000-2000  -Kbps - API level 11
+                case TelephonyManager.NETWORK_TYPE_EVDO_B:  return true;  // ~ 5000       -Kbps - API level 9
+                case TelephonyManager.NETWORK_TYPE_HSPAP:   return true;  // ~ 10000-20000-Kbps - API level 13
+                case TelephonyManager.NETWORK_TYPE_IDEN:    return false; // ~ 25         -Kbps - API level 8
+                case TelephonyManager.NETWORK_TYPE_LTE:     return true;  // ~ 10000+     -Kbps - API level 11
+                case TelephonyManager.NETWORK_TYPE_UNKNOWN:               // ~ Unknown
                 default:
                     return false;
             }
@@ -128,12 +126,10 @@ public class InternetConnectivity{
         OkHttpClient client = new OkHttpClient();
         final boolean[] isFastNetwork = {false};
 
-
         // Create and build request
         Request request = new Request.Builder()
-                // Url of image to be downloaded
-                .url("your-url-to-image-or-other-file")
-                        .build();
+                .url("your-url-to-image-or-other-file") // Url of image to be downloaded
+                .build(); // Build request
 
         // Get start time
         startTime = System.currentTimeMillis();
@@ -158,7 +154,6 @@ public class InternetConnectivity{
                         case 500:   throw new IOException("Internal Server Error " + response.code());
                         default:    throw new IOException("Unexpected code " + response.code() + " "  + response);
                     }
-
                 }
 
                 // Get headers from response
@@ -190,13 +185,12 @@ public class InternetConnectivity{
                 final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);
 
                 //Bandwidth in Kbps
-                //POOR -      Bandwidth under 100 Kbps.
-                //MODERATE    Bandwidth between 150 and 550 Kbps.
-                //GOOD        Bandwidth over 2000 Kbps.
-                //EXCELLENT   Bandwidth over 2000 Kbps.
-                //UNKNOWN     Connection quality cannot be found.
+                // POOR -      Bandwidth under 100 Kbps.
+                // MODERATE    Bandwidth between 150 and 550 Kbps.
+                // GOOD        Bandwidth over 2000 Kbps.
+                // EXCELLENT   Bandwidth over 2000 Kbps.
+                // UNKNOWN     Connection quality cannot be found.
                 if (kilobytesPerSec > 100){
-
                     // Update connection state
                     isFastNetwork[0] = true;
                 }
@@ -216,5 +210,4 @@ public class InternetConnectivity{
         // Return connection state
         return isFastNetwork[0];
     }
-
 }
