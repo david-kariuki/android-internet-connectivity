@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
 ```
 
 
-<br/>**Android Application Example**
+<br/>
+
+# Android Application Example
 
 An android application with code examples named `InternetConnectivity.zip` has been included in this repository.
 It contains: 
