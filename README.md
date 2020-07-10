@@ -95,6 +95,13 @@ if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
 }      
 ```
 
+Check for connection speed with type and subtype
+```
+if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
+    // Throw UNKNOWN NETWORK exception
+}
+```
+
 <br/>Activity example
 ```
 package dk.internetconnectivity;
@@ -151,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
                 doSomething();
             }
         }
+	
+	// Check for connection speed with type and subtype
+	if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
+	    // Throw UNKNOWN NETWORK exception
+	}
     }
 
     /**
