@@ -53,7 +53,7 @@ dependencies {
 
 # Examples in code:<br/>
 
-*Check for connectivity to either WiFi or mobile connection*
+Check connectivity to either WiFi or mobile connection
 ```
 if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
     // Run process requiring WiFi or mobile connection
@@ -67,7 +67,7 @@ if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
 }
 ```
 
-*Check for connectivity to mobile connection*
+Check connectivity to mobile connection
 ```
 if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
     // Run process on mobile network
@@ -81,7 +81,7 @@ if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
 }
 ```
 
-*Check for connectivity to WiFi connection*
+Check connectivity to WiFi connection
 ```
 if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
     // Run process on WiFi connection - e.g. Heavy downloads, updates etc
@@ -91,10 +91,11 @@ if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
     if (InternetConnectivity.isConnectionFast(mContext)){
 	// Run heavy request requiring strong network connection
 	doSomething();
-           
+    }	
+}      
 ```
 
-<br/>*Activity example*
+<br/>Activity example
 ```
 package dk.internetconnectivity;
 
