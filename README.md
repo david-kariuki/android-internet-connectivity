@@ -51,8 +51,50 @@ dependencies {
 
 <br/>
 
-# Examples in code:
+# Examples in code:<br/>
 
+*Check for connectivity to either WiFi or mobile connection*
+```
+if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
+    // Run process requiring WiFi or mobile connection
+    doSomething();
+
+    // Check if connection is fast
+    if (InternetConnectivity.isConnectionFast(mContext)){
+	// Run heavy request requiring strong network connection
+	doSomething();
+    }
+}
+```
+
+*Check for connectivity to mobile connection*
+```
+if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
+    // Run process on mobile network
+    doSomething();
+
+    // Check if connection is fast
+    if (InternetConnectivity.isConnectionFast(mContext)){
+	// Run heavy request requiring strong network connection
+	doSomething();
+    }
+}
+```
+
+*Check for connectivity to WiFi connection*
+```
+if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
+    // Run process on WiFi connection - e.g. Heavy downloads, updates etc
+    doSomething();
+
+    // Check if connection is fast
+    if (InternetConnectivity.isConnectionFast(mContext)){
+	// Run heavy request requiring strong network connection
+	doSomething();
+           
+```
+
+<br/>*Activity example*
 ```
 package dk.internetconnectivity;
 
@@ -73,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         Context mContext = this; // Get activity context
 
-        // Check for connection to either WiFi or mobile connection
+        // Check for connectivity to either WiFi or mobile connection
         if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
             // Run process requiring WiFi or mobile connection
             doSomething();
@@ -85,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Check for connection to either mobile connection
+        // Check for connectivity to mobile connection
         if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
             // Run process on mobile network
             doSomething();
@@ -97,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Check for connection to either WiFi connection
+        // Check for connectivity to WiFi connection
         if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
             // Run process on WiFi connection - e.g. Heavy downloads, updates etc
             doSomething();
