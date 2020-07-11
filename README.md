@@ -185,4 +185,4 @@ An android application with code examples named `InternetConnectivity.zip` has b
 It contains: 
 1. `InternetConnectivity.class`
 2. `Example code implementations`
-3. A basic `network_security_config.xml` file - could be used to configure network traffic like disabling cleartexttraffic to domains and subdomains.
+3. A basic `network_security_config.xml` file - could be used to configure network traffic like disabling `clearTextTraffic` to domains and subdomains.
