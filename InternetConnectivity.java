@@ -25,6 +25,7 @@ import java.util.Objects;
  * WiFi network speed is calculated by downloading a file and calculating the network speed
  * @author David Kariuki
  */
+@SuppressWarnings("unused")
 public class InternetConnectivity {
 
     @SuppressWarnings("unused")
