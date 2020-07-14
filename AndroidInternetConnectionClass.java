@@ -1,32 +1,19 @@
-package dk.internetconnectivity;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.telephony.TelephonyManager;
-
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
 
 /**
- * This class checks for device's network connectivity and network speed
- * WiFi network speed is calculated by downloading a file and calculating network speed
+ * This class checks for device's network connectivity and the network speed
+ * WiFi network speed is calculated by downloading a file and calculating the network speed
+ * @author David Kariuki
  */
-public class InternetConnectivity{
+public class InternetConnectivity {
 
     @SuppressWarnings("unused")
-    private static final String TAG = InternetConnectivity.class.getSimpleName();
+    private static final String TAG = InternetConnectivity.class.getSimpleName(); // Get activity simple name
+    private static final int byteValue = 1000;
+
+    private static HashMap<String, String> connectionSpeedInfo;
 
     /**
-     * Check if there is any internet connection
+     * Check for internet connection
      * @param context - For getting network info
      * @return boolean
      */
@@ -56,7 +43,17 @@ public class InternetConnectivity{
     }
 
     /**
-     * Check if there is fast connection
+     * Check for VPN network connection
+     * @param context - For getting network info
+     * @return boolean
+     */
+    public static boolean isConnectedToVPNNetwork(Context context){
+        NetworkInfo info = InternetConnectivity.getNetworkInfo(context);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_VPN);
+    }
+
+    /**
+     * Check for fast connection
      * @param context - For getting network info
      * @return boolean
      */
@@ -66,20 +63,17 @@ public class InternetConnectivity{
     }
 
     /**
-     * Check if the connection is fast with specific type and subType
+     * Check for fast connection with specific type and subType
      * @param type - networkType
      * @param subType - networkSubType
      * @return boolean
      */
     public static boolean isConnectionFast(int type, int subType){
-        if (type==ConnectivityManager.TYPE_WIFI){
-
+        if (type==ConnectivityManager.TYPE_WIFI || type==ConnectivityManager.TYPE_VPN){
             // Calculate WiFi network speed - (WiFi is not always fast)
             return calculateNetworkSpeedByDownloadingFile();
         } else if(type==ConnectivityManager.TYPE_MOBILE){
-
             switch(subType){
-
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
                 case TelephonyManager.NETWORK_TYPE_EDGE:    return false; // ~ 50-100     -Kbps - slow.
                 case TelephonyManager.NETWORK_TYPE_CDMA:    return false; // ~ 14-64      -Kbps - slow.
@@ -105,6 +99,30 @@ public class InternetConnectivity{
     }
 
     /**
+     * Check for fast WiFi connection
+     * Returns detailed information like time taken in milliseconds, seconds, networks speed (in bytes, kbps and mbps), download speed and test file size.
+     * @return HashMap<String, String> - downloadResponse information for debugging purposes or more specific checks
+     */
+    public static HashMap<String, String> getWiFiConnectionSpeedInfo(Context context) {
+        if (getNetworkInfo(context).getType() == ConnectivityManager.TYPE_WIFI) {
+            calculateNetworkSpeedByDownloadingFile();
+        }
+        return connectionSpeedInfo;
+    }
+
+    /**
+     * Check for fast VPN connectio.n
+     * Returns detailed information like time taken in milliseconds, seconds, networks speed (in bytes, kbps and mbps), download speed and test file size.
+     * @return HashMap<String, String> - downloadResponse information for debugging purposes or more specific checks
+     */
+    public static HashMap<String, String> getVPNConnectionSpeedInfo(Context context) {
+        if (getNetworkInfo(context).getType() == ConnectivityManager.TYPE_VPN) {
+            calculateNetworkSpeedByDownloadingFile();
+        }
+        return connectionSpeedInfo;
+    }
+
+    /**
      * Get network info
      * @param context - For getting connectivity service
      * @return NetworkInfo
@@ -122,16 +140,16 @@ public class InternetConnectivity{
 
         long startTime;
         final long[] endTime = new long[1];
-        final long[] fileSize = new long[1];
+        long[] testFileSize = new long[1];
         OkHttpClient client = new OkHttpClient();
         final boolean[] isFastNetwork = {false};
 
         // Create and build request
         Request request = new Request.Builder()
-                .url("your-url-to-image-or-other-file") // Url of image to be downloaded
+                .url("https://github.com/david-kariuki/Android-Internet-Connection-Class/blob/master/test_download_image.png") // Url of image or file to be downloaded
                 .build(); // Build request
 
-        // Get start time
+        // Get start time in milli seconds
         startTime = System.currentTimeMillis();
 
         client.newCall(request).enqueue(new Callback() {
@@ -150,64 +168,102 @@ public class InternetConnectivity{
                         case 401:   throw new IOException("Unauthorized " + response.code());
                         case 404:   throw new IOException("Not found " + response.code());
                         case 408:   throw new IOException("Request Timeout " + response.code());
+                        case 429:   throw new IOException("Too Many Requests " + response.code());
                         case 444:   throw new IOException("Connection Closed Without Response " + response.code());
                         case 500:   throw new IOException("Internal Server Error " + response.code());
                         default:    throw new IOException("Unexpected code " + response.code() + " "  + response);
                     }
                 }
 
-                // Get headers from response
+                // Get response headers
                 Headers responseHeaders = response.headers();
 
-                // Loop through headers
+                // Loop through response headers
                 /*for (int i = 0, size = responseHeaders.size(); i < size; i++) {
                     Log.d(TAG, responseHeaders.name(i) + ": " + responseHeaders.value(i));
                 }*/
 
                 try (InputStream input = response.body().byteStream()) {
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    byte[] buffer = new byte[1024];
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[byteValue];
 
                     while (input.read(buffer) != -1) {
-                        bos.write(buffer);
+                        byteArrayOutputStream.write(buffer);
                     }
-
-                    // byte[] docBuffer = bos.toByteArray();
-                    fileSize[0] = bos.size();
+                    testFileSize[0] = byteArrayOutputStream.size();
                 }
 
-                // Write to end time
+                // Set end time
                 endTime[0] = System.currentTimeMillis();
 
+                double timeTakenMillis, timeTakenSecs;
+                double downloadSpeed, bytesPerSec, kilobytesPerSec, megabytesPerSec;
+
                 // Calculate download time by subtracting endTime from startTime
-                double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
-                double timeTakenSecs = timeTakenMills / 1000;  // divide by 1000 to get time in seconds
-                final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);
+                timeTakenMillis = Math.floor(endTime[0] - startTime);  // time taken in milliseconds
 
-                //Bandwidth in Kbps
-                // POOR -      Bandwidth under 100 Kbps.
-                // MODERATE    Bandwidth between 150 and 550 Kbps.
-                // GOOD        Bandwidth over 2000 Kbps.
-                // EXCELLENT   Bandwidth over 2000 Kbps.
-                // UNKNOWN     Connection quality cannot be found.
-                if (kilobytesPerSec > 100){
-                    // Update connection state
-                    isFastNetwork[0] = true;
+
+                if (timeTakenMillis > 0){
+                    // Network speed calculated
+
+                    // Get time in seconds
+                    timeTakenSecs = timeTakenMillis / 1000;
+
+                    // Get kilobytes per second
+                    kilobytesPerSec = roundDouble(byteValue / timeTakenSecs);
+
+                    // Get bytes per second
+                    bytesPerSec = roundDouble(kilobytesPerSec * byteValue);
+
+                    // Get megabytes per second
+                    megabytesPerSec = roundDouble(kilobytesPerSec / byteValue);
+
+                    //Bandwidth in Kbps
+                    // POOR -      Bandwidth under 100 Kbps.
+                    // MODERATE    Bandwidth between 150 and 550 Kbps.
+                    // GOOD        Bandwidth over 2000 Kbps.
+                    // EXCELLENT   Bandwidth over 2000 Kbps.
+                    // UNKNOWN     Connection quality cannot be found.
+
+                    // Update connection speed state
+                    isFastNetwork[0] = (kilobytesPerSec > 100);
+
+                    // Get the download speed by dividing the file size by time taken to download
+                    downloadSpeed = roundDouble((testFileSize[0] / timeTakenMillis));
+
+                    connectionSpeedInfo = new HashMap<>();
+                    connectionSpeedInfo.put("timeTakenMillis", String.valueOf(timeTakenMillis));
+                    connectionSpeedInfo.put("timeTakenSecs", String.valueOf(timeTakenSecs));
+                    connectionSpeedInfo.put("linkSpeedBps", String.valueOf(bytesPerSec));
+                    connectionSpeedInfo.put("linkSpeedKbps", String.valueOf(kilobytesPerSec));
+                    connectionSpeedInfo.put("linkSpeedMbps", String.valueOf(megabytesPerSec));
+                    connectionSpeedInfo.put("testFileDownloadSpeed", String.valueOf(downloadSpeed));
+                    connectionSpeedInfo.put("testFileSize", String.valueOf(testFileSize[0]));
+                    connectionSpeedInfo.put("isFastNetwork", String.valueOf(isFastNetwork[0]));
+
+                    // DEBUG Logs
+                    Log.d(TAG, "Time taken in milliseconds: " + timeTakenMillis );
+                    Log.d(TAG, "Time taken in seconds: " + timeTakenSecs );
+                    Log.d(TAG, "Bytes per sec: " + bytesPerSec );
+                    Log.d(TAG, "Kilobytes per sec: " + kilobytesPerSec );
+                    Log.d(TAG, "Megabytes per sec: " + megabytesPerSec );
+                    Log.d(TAG, "Download Speed: " + downloadSpeed );
+                    Log.d(TAG, "Test file size: " + testFileSize[0]);
                 }
-
-                // get the download speed by dividing the file size by time taken to download
-                double speed = fileSize[0] / timeTakenMills;
-
-                // DEBUG Logs
-                /*Log.d(TAG, "Time taken in secs: " + timeTakenSecs);
-                Log.d(TAG, "Bytes per sec: " + kilobytePerSec * 1000);
-                Log.d(TAG, "Kilobytes per sec: " + kilobytePerSec);
-                Log.d(TAG, "Download Speed: " + speed);
-                Log.d(TAG, "File size: " + fileSize[0]);*/
             }
         });
-
         // Return connection state
         return isFastNetwork[0];
     }
+
+    /**
+     * Function to round double to 2 decimal places
+     * @param value - double value
+     */
+    private static double roundDouble(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(4, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }
+
