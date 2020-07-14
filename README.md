@@ -55,6 +55,7 @@ dependencies {
 
 Check connectivity to either WiFi or mobile connection
 ```
+// Check connectivity to either WiFi or mobile connection
 if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
     // Run process requiring WiFi or mobile connection
     doSomething();
@@ -69,6 +70,7 @@ if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
 
 Check connectivity to mobile connection
 ```
+// Check connectivity to mobile connection
 if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
     // Run process on mobile network
     doSomething();
@@ -78,11 +80,18 @@ if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
 	// Run heavy request requiring strong network connection
 	doSomething();
     }
+
+    // Check mobile connection speed with subtype
+    if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
+	// Throw UNKNOWN NETWORK exception
+	doSomething();
+    }
 }
 ```
 
 Check connectivity to WiFi connection
 ```
+// Check connectivity to WiFi connection
 if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
     // Run process on WiFi connection - e.g. Heavy downloads, updates etc
     doSomething();
@@ -91,97 +100,59 @@ if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
     if (InternetConnectivity.isConnectionFast(mContext)){
 	// Run heavy request requiring strong network connection
 	doSomething();
-    }	
-}      
+    }
+
+
+    // Check if connection is fast and return network information
+    // Returns HashMap<String, String> with details (timeTakenMillis, timeTakenSecs, linkSpeedBps, linkSpeedKbps, linkSpeedMbps, testFileDownloadSpeed, testFileSize)
+    String timeTakenMillis, timeTakenSecs, linkSpeedBps, linkSpeedKbps, linkSpeedMbps, testFileDownloadSpeed, testFileSize;
+    boolean isFastNetwork;
+    connectionSpeedInfo = InternetConnectivity.getWiFiConnectionSpeedInfo(mContext);
+    //noinspection unused
+    timeTakenMillis = connectionSpeedInfo.get("timeTakenMillis");
+    timeTakenSecs = connectionSpeedInfo.get("timeTakenSecs");
+    linkSpeedBps = connectionSpeedInfo.get("linkSpeedBps");
+    linkSpeedKbps = connectionSpeedInfo.get("linkSpeedKbps");
+    linkSpeedMbps = connectionSpeedInfo.get("linkSpeedMbps");
+    testFileDownloadSpeed = connectionSpeedInfo.get("testFileDownloadSpeed");
+    testFileSize = connectionSpeedInfo.get("testFileSize");
+    isFastNetwork = Boolean.parseBoolean(connectionSpeedInfo.get("isFastNetwork"));
+} 
 ```
 
-Check for connection speed with type and subtype
+Check connectivity to VPN connection
 ```
-if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
-    // Throw UNKNOWN NETWORK exception
+// Check connectivity to VPN connection
+if (InternetConnectivity.isConnectedToVPNNetwork(mContext)){
+    // Run process on WiFi connection - e.g. Heavy downloads, updates etc
     doSomething();
-}
-```
 
-<br/>Activity example
-```
-package dk.internetconnectivity;
-
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        Context mContext = this; // Get activity context
-
-        // Check for connectivity to either WiFi or mobile connection
-        if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
-            // Run process requiring WiFi or mobile connection
-            doSomething();
-
-            // Check if connection is fast
-            if (InternetConnectivity.isConnectionFast(mContext)){
-                // Run heavy request requiring strong network connection
-                doSomething();
-            }
-        }
-
-        // Check for connectivity to mobile connection
-        if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
-            // Run process on mobile network
-            doSomething();
-
-            // Check if connection is fast
-            if (InternetConnectivity.isConnectionFast(mContext)){
-                // Run heavy request requiring strong network connection
-                doSomething();
-            }
-        }
-
-        // Check for connectivity to WiFi connection
-        if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
-            // Run process on WiFi connection - e.g. Heavy downloads, updates etc
-            doSomething();
-
-            // Check if connection is fast
-            if (InternetConnectivity.isConnectionFast(mContext)){
-                // Run heavy request requiring strong network connection
-                doSomething();
-            }
-        }
-	
-	// Check for connection speed with type and subtype
-	if (InternetConnectivity.isConnectionFast(ConnectivityManager.TYPE_MOBILE, TelephonyManager.NETWORK_TYPE_UNKNOWN)){
-	    // Throw UNKNOWN NETWORK exception
-	    doSomething();
-	}
+    // Check if connection is fast
+    if (InternetConnectivity.isConnectionFast(mContext)){
+	// Run heavy request requiring strong network connection
+	doSomething();
     }
 
-    /**
-     * Function to perform some task
-     */
-    private void doSomething(){
-        // Background request or some other code here
-    }
+    // Check if connection is fast and return network information
+    // Returns HashMap<String, String> with details (timeTakenMillis, timeTakenSecs, linkSpeedBps, linkSpeedKbps, linkSpeedMbps, testFileDownloadSpeed, testFileSize)
+    String timeTakenMillis, timeTakenSecs, linkSpeedBps, linkSpeedKbps, linkSpeedMbps, testFileDownloadSpeed, testFileSize;
+    boolean isFastNetwork;
+    connectionSpeedInfo = InternetConnectivity.getVPNConnectionSpeedInfo(mContext);
+    timeTakenMillis = connectionSpeedInfo.get("timeTakenMillis");
+    timeTakenSecs = connectionSpeedInfo.get("timeTakenSecs");
+    linkSpeedBps = connectionSpeedInfo.get("linkSpeedBps");
+    linkSpeedKbps = connectionSpeedInfo.get("linkSpeedKbps");
+    linkSpeedMbps = connectionSpeedInfo.get("linkSpeedMbps");
+    testFileDownloadSpeed = connectionSpeedInfo.get("testFileDownloadSpeed");
+    testFileSize = connectionSpeedInfo.get("testFileSize");
+    isFastNetwork = Boolean.parseBoolean(connectionSpeedInfo.get("isFastNetwork"));
 }
 ```
-
-
 <br/>
 
 # Android Application Example
 
-An android application with code examples named `InternetConnectivity.zip` has been included in this repository.
+An android application with code examples named `InternetConnectivityExample.zip` has been included in this repository.
 It contains: 
 1. `InternetConnectivity.class`
 2. `Example code implementations`
