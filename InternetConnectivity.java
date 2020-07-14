@@ -167,7 +167,7 @@ public class InternetConnectivity {
 
         // Create and build request
         Request request = new Request.Builder()
-                .url("https://github.com/david-kariuki/Android-Internet-Connection-Class/blob/master/test_download_image.png") // Url of image or file to be downloaded
+                .url("https://github.com/david-kariuki/AndroidInternetConnectivity/blob/master/test_download_image.png") // Url of image or file to be downloaded
                 .build(); // Build request
 
         // Get start time in milli seconds
