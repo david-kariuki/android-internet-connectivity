@@ -1,4 +1,4 @@
-# JAVA Android-Internet-Connection-Class
+# JAVA Android Internet Connectivity
 This class checks for internet connection and speed on your android phone.
 It checks for both mobile and wifi connections.
 
