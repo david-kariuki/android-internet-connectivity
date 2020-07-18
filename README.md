@@ -2,7 +2,7 @@
 This class checks for internet connection and speed on your android phone.
 It checks for both mobile and wifi connections.
 
-For mobile network speeds, the network subtypes below are checked
+For mobile network speeds, the `network subtypes` below are checked
 
 	1.  NETWORK_TYPE_1xRTT:
 	2.  NETWORK_TYPE_EDGE:    return false;   // ~ 50-100     -Kbps   
@@ -21,7 +21,7 @@ For mobile network speeds, the network subtypes below are checked
 	15. NETWORK_TYPE_LTE:     return true;    // ~ 10000+     -Kbps   // API level 11
 	16. NETWORK_TYPE_UNKNOWN:                 // ~ Unknown
 
-<br/>For wifi speed calculation:
+<br/>For WiFi and VPN speed calculation:
 
     1. A file is downloaded from the internet.
     2. Get download start time.
@@ -53,7 +53,7 @@ dependencies {
 
 # Examples in code:<br/>
 
-Check connectivity to either WiFi or mobile connection
+Check connectivity to either WiFi or mobile connection.
 ```
 // Check connectivity to either WiFi or mobile connection
 if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
@@ -68,7 +68,7 @@ if (InternetConnectivity.isConnectedToAnyNetwork(mContext)){
 }
 ```
 
-Check connectivity to mobile connection
+Check connectivity to mobile connection.
 ```
 // Check connectivity to mobile connection
 if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
@@ -89,7 +89,7 @@ if (InternetConnectivity.isConnectedToMobileNetwork(mContext)){
 }
 ```
 
-Check connectivity to WiFi connection
+Check connectivity to WiFi connection.
 ```
 // Check connectivity to WiFi connection
 if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
@@ -120,7 +120,7 @@ if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
 } 
 ```
 
-Check connectivity to VPN connection
+Check connectivity to VPN connection.
 ```
 // Check connectivity to VPN connection
 if (InternetConnectivity.isConnectedToVPNNetwork(mContext)){
@@ -150,7 +150,7 @@ if (InternetConnectivity.isConnectedToVPNNetwork(mContext)){
 ```
 <br/>
 
-# Android Application Example
+# Android Application Example.
 
 An android application with code examples named `InternetConnectivityExample.zip` has been included in this repository.
 It contains: 
