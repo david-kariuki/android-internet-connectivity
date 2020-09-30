@@ -1,3 +1,6 @@
+// Copyright (c) 2020 by David Kariuki (dk). All Rights Reserved.
+
+
 package dk.example.internet_connectivity_example;
 
 import android.content.Context;
@@ -337,4 +340,3 @@ public class InternetConnectivity {
         return bd.doubleValue();
     }
 }
-
