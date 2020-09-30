@@ -29,7 +29,7 @@ For mobile network speeds, the `network subtypes` below are checked
 		double timeTakenMills = Math.floor(endTime[0] - startTime);  // time taken in milliseconds.
           	double timeTakenSecs = timeTakenMills / 1000;  // divide by 1000 to get time in seconds.
           	final int kilobytesPerSec = (int) Math.round(1024 / timeTakenSecs);  
-		
+
     4. Get the download speed by dividing the file size by time taken to download
           double speed = fileSize[0] / timeTakenMills;
 
@@ -117,7 +117,7 @@ if (InternetConnectivity.isConnectedToWifiNetwork(mContext)){
     testFileDownloadSpeed = connectionSpeedInfo.get("testFileDownloadSpeed");
     testFileSize = connectionSpeedInfo.get("testFileSize");
     isFastNetwork = Boolean.parseBoolean(connectionSpeedInfo.get("isFastNetwork"));
-} 
+}
 ```
 
 Check connectivity to VPN connection.
@@ -153,7 +153,14 @@ if (InternetConnectivity.isConnectedToVPNNetwork(mContext)){
 # Android Application Example.
 
 An android application with code examples named `InternetConnectivityExample.zip` has been included in this repository.
-It contains: 
+It contains:
 1. `InternetConnectivity.class`
 2. `Example code implementations`
 3. A basic `network_security_config.xml` file - could be used to configure network traffic like disabling `clearTextTraffic` to domains and subdomains.
+
+\
+\
+\
+<a href="https://www.buymeacoffee.com/davidkariuki" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/butto ns/v2/default-yellow.png" alt="Kindly Buy Me A Coffee" style="height: 15px !important;width: 55px !important;"/>
+</a>
