@@ -1,6 +1,5 @@
 # JAVA Android Internet Connectivity
-This class checks for internet connection and speed on your android phone.
-It checks for both mobile and wifi connections.
+This class checks for internet connection availability, speed and network type on your android phone.
 
 For mobile network speeds, the `network subtypes` below are checked
 
