@@ -157,5 +157,4 @@ It contains:
 2. `Example code implementations`
 3. A basic `network_security_config.xml` file - could be used to configure network traffic like disabling `clearTextTraffic` to domains and subdomains.
 
-\
-\
+
