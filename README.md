@@ -159,7 +159,3 @@ It contains:
 
 \
 \
-\
-<a href="https://www.buymeacoffee.com/davidkariuki" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/butto ns/v2/default-yellow.png" alt="Kindly Buy Me A Coffee" style="height: 15px !important;width: 55px !important;"/>
-</a>
